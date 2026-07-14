@@ -1,0 +1,27 @@
+{
+  "name": "azulink",
+  "version": "1.0.0",
+  "description": "AzulLink - Plateforme d'écotourisme immersif - MVP",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node data/seed.js"
+  },
+  "author": "AzulLink",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "lowdb": "^7.0.1",
+    "multer": "^2.2.0",
+    "uuid": "^14.0.1"
+  }
+}
