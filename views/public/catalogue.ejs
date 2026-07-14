@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<section class="hero" style="padding: 3.5rem 0;">
+  <div class="container">
+    <h1>Catalogue des expériences</h1>
+    <p class="lead mb-0">Circuits nature, hébergements, culture, artisanat et immersion totale au cœur de Khénifra.</p>
+  </div>
+</section>
+
+<div class="container py-4">
+  <form method="get" action="/catalogue" class="row g-2 mb-4">
+    <div class="col-md-8">
+      <input type="text" name="q" value="<%= q %>" class="form-control" placeholder="Rechercher une expérience...">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-azulink-primary w-100" type="submit"><i class="bi bi-search"></i> Rechercher</button>
+    </div>
+  </form>
+
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <a href="/catalogue<%= q ? '?q=' + q : '' %>" class="category-pill <%= !activeCategorie ? 'active' : '' %>">Toutes les catégories</a>
+    <% categories.forEach(cat => { %>
+      <a href="/catalogue?categorie=<%= cat.slug %><%= q ? '&q=' + q : '' %>" class="category-pill <%= activeCategorie === cat.slug ? 'active' : '' %>"><i class="bi <%= cat.icon %>"></i> <%= cat.name %></a>
+    <% }) %>
+  </div>
+
+  <p class="text-muted"><%= offers.length %> expérience<%= offers.length > 1 ? 's' : '' %> trouvée<%= offers.length > 1 ? 's' : '' %></p>
+
+  <div class="row g-4">
+    <% if (offers.length === 0) { %>
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-emoji-frown display-4 text-muted"></i>
+        <p class="text-muted mt-3">Aucune expérience ne correspond à votre recherche pour le moment.</p>
+      </div>
+    <% } %>
+    <% offers.forEach(offer => { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="offer-card position-relative">
+          <div class="position-relative">
+            <img src="<%= offer.images[0] %>" class="offer-img" alt="<%= offer.title %>">
+            <span class="category-badge"><%= offer.category ? offer.category.name : '' %></span>
+          </div>
+          <div class="p-3">
+            <h5 class="mb-1"><%= offer.title %></h5>
+            <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> <%= offer.location.address %> · <i class="bi bi-clock"></i> <%= offer.duration %></p>
+            <p class="small mb-3"><%= offer.description.slice(0, 90) %>...</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="price-tag"><%= offer.price %> MAD</span>
+              <a href="/offres/<%= offer.slug %>" class="btn btn-sm btn-azulink-primary">Découvrir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

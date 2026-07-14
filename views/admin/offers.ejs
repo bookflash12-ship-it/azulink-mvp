@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4">Offres</h1>
+  <div class="row g-4">
+    <div class="col-lg-3"><%- include('../partials/admin-sidebar') %></div>
+    <div class="col-lg-9">
+      <% offers.forEach(o => { %>
+        <div class="stat-card mb-3">
+          <div class="d-flex justify-content-between flex-wrap gap-2">
+            <div class="d-flex gap-3">
+              <img src="<%= o.images[0] %>" style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
+              <div>
+                <h6 class="mb-1"><%= o.title %> <span class="badge badge-status-<%= o.status === 'validated' ? 'validated' : 'pending' %>"><%= o.status === 'validated' ? 'Validée' : 'En attente' %></span> <% if (o.featured) { %><span class="badge bg-warning text-dark">Vedette</span><% } %></h6>
+                <p class="small text-muted mb-1"><%= o.category ? o.category.name : '' %> · <%= o.provider ? o.provider.businessName : '' %> · <%= o.price %> MAD</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-start gap-2 flex-wrap">
+              <a href="/offres/<%= o.slug %>" target="_blank" class="btn btn-sm btn-azulink-outline">Voir</a>
+              <% if (o.status !== 'validated') { %>
+                <form method="post" action="/admin/offres/<%= o.id %>/valider"><button class="btn btn-sm btn-azulink-primary">Valider</button></form>
+              <% } else { %>
+                <form method="post" action="/admin/offres/<%= o.id %>/rejeter"><button class="btn btn-sm btn-outline-secondary">Mettre en attente</button></form>
+                <form method="post" action="/admin/offres/<%= o.id %>/vedette"><button class="btn btn-sm btn-outline-warning"><%= o.featured ? 'Retirer vedette' : 'Mettre en vedette' %></button></form>
+              <% } %>
+              <form method="post" action="/admin/offres/<%= o.id %>/supprimer" onsubmit="return confirm('Supprimer cette offre ?');"><button class="btn btn-sm btn-outline-danger">Supprimer</button></form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

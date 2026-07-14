@@ -1,0 +1,12 @@
+{
+  "name": "AzulLink - Écotourisme immersif",
+  "short_name": "AzulLink",
+  "description": "Plateforme d'écotourisme immersif de la région de Khénifra",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfaf7",
+  "theme_color": "#2f6844",
+  "icons": [
+    { "src": "/images/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

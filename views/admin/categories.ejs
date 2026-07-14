@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4">Catégories</h1>
+  <div class="row g-4">
+    <div class="col-lg-3"><%- include('../partials/admin-sidebar') %></div>
+    <div class="col-lg-9">
+      <div class="stat-card mb-4">
+        <h5 class="mb-3">Ajouter une catégorie</h5>
+        <form method="post" action="/admin/categories/nouveau" class="row g-2">
+          <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Nom de la catégorie" required>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="icon" class="form-control" placeholder="Icône (ex: bi-tree)">
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-azulink-primary w-100">Ajouter</button>
+          </div>
+        </form>
+      </div>
+      <div class="stat-card p-0">
+        <table class="table mb-0">
+          <thead><tr><th>Nom</th><th>Offres</th><th></th></tr></thead>
+          <tbody>
+          <% categories.forEach(c => { %>
+            <tr>
+              <td><i class="bi <%= c.icon %>"></i> <%= c.name %></td>
+              <td><%= c.offersCount %></td>
+              <td>
+                <form method="post" action="/admin/categories/<%= c.id %>/supprimer" onsubmit="return confirm('Supprimer cette catégorie ?');">
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

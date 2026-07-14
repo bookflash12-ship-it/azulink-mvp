@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4">Réservations</h1>
+  <div class="row g-4">
+    <div class="col-lg-3"><%- include('../partials/admin-sidebar') %></div>
+    <div class="col-lg-9">
+      <% bookings.forEach(b => { %>
+        <div class="stat-card mb-3">
+          <div class="d-flex justify-content-between flex-wrap gap-2">
+            <div>
+              <h6 class="mb-1"><%= b.offer ? b.offer.title : 'Offre supprimée' %></h6>
+              <p class="small mb-1"><i class="bi bi-person"></i> <%= b.fullName %> · <i class="bi bi-telephone"></i> <%= b.phone %> · <i class="bi bi-envelope"></i> <%= b.email %></p>
+              <p class="small mb-1"><i class="bi bi-calendar"></i> <%= b.date %> · <i class="bi bi-people"></i> <%= b.participants %> pers. · <i class="bi bi-shop"></i> <%= b.provider ? b.provider.businessName : '' %></p>
+              <% if (b.comments) { %><p class="small text-muted mb-0">"<%= b.comments %>"</p><% } %>
+            </div>
+            <div class="text-end">
+              <span class="badge badge-status-<%= b.status %> mb-2 d-inline-block"><%= b.status === 'pending' ? 'En attente' : (b.status === 'confirmed' ? 'Confirmée' : 'Annulée') %></span>
+              <form method="post" action="/admin/reservations/<%= b.id %>/statut" class="d-flex gap-1">
+                <select name="status" class="form-select form-select-sm">
+                  <option value="pending" <%= b.status === 'pending' ? 'selected' : '' %>>En attente</option>
+                  <option value="confirmed" <%= b.status === 'confirmed' ? 'selected' : '' %>>Confirmée</option>
+                  <option value="cancelled" <%= b.status === 'cancelled' ? 'selected' : '' %>>Annulée</option>
+                </select>
+                <button class="btn btn-sm btn-azulink-primary">OK</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+      <% if (bookings.length === 0) { %><div class="stat-card text-center py-5"><p class="text-muted">Aucune réservation.</p></div><% } %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

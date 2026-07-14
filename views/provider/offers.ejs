@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <h1 class="h3 mb-0">Mes offres</h1>
+    <a href="/prestataire/offres/nouveau" class="btn btn-azulink-primary"><i class="bi bi-plus-circle"></i> Nouvelle offre</a>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <%- include('../partials/provider-sidebar') %>
+    </div>
+    <div class="col-lg-9">
+      <% if (offers.length === 0) { %>
+        <div class="stat-card text-center py-5">
+          <p class="text-muted">Vous n'avez pas encore d'offre. Ajoutez votre première expérience !</p>
+        </div>
+      <% } %>
+      <div class="row g-3">
+        <% offers.forEach(offer => { %>
+          <div class="col-md-6">
+            <div class="offer-card">
+              <img src="<%= offer.images[0] || 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800' %>" class="offer-img" alt="<%= offer.title %>">
+              <div class="p-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6><%= offer.title %></h6>
+                  <span class="badge badge-status-<%= offer.status === 'validated' ? 'validated' : 'pending' %>"><%= offer.status === 'validated' ? 'Validée' : 'En attente' %></span>
+                </div>
+                <p class="small text-muted mb-2"><%= offer.category ? offer.category.name : '' %> · <%= offer.price %> MAD</p>
+                <div class="d-flex gap-2">
+                  <a href="/offres/<%= offer.slug %>" target="_blank" class="btn btn-sm btn-azulink-outline">Voir</a>
+                  <a href="/prestataire/offres/<%= offer.id %>/modifier" class="btn btn-sm btn-azulink-outline">Modifier</a>
+                  <form method="post" action="/prestataire/offres/<%= offer.id %>/supprimer" onsubmit="return confirm('Supprimer cette offre ?');">
+                    <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,8 @@
+<div class="dashboard-sidebar">
+  <ul class="nav flex-column">
+    <li><a class="nav-link <%= path === '/prestataire' ? 'active' : '' %>" href="/prestataire"><i class="bi bi-speedometer2"></i> Tableau de bord</a></li>
+    <li><a class="nav-link <%= path && path.startsWith('/prestataire/offres') ? 'active' : '' %>" href="/prestataire/offres"><i class="bi bi-bag"></i> Mes offres</a></li>
+    <li><a class="nav-link <%= path === '/prestataire/reservations' ? 'active' : '' %>" href="/prestataire/reservations"><i class="bi bi-calendar-check"></i> Réservations</a></li>
+    <li><a class="nav-link <%= path === '/prestataire/profil' ? 'active' : '' %>" href="/prestataire/profil"><i class="bi bi-gear"></i> Mon profil</a></li>
+  </ul>
+</div>

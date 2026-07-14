@@ -1,0 +1,64 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-1"><i class="bi bi-shop"></i> <%= provider.businessName %></h1>
+  <p class="text-muted mb-4">
+    <% if (provider.validated) { %>
+      <span class="badge badge-status-confirmed">Compte validé</span>
+    <% } else { %>
+      <span class="badge badge-status-pending">En attente de validation par l'administrateur</span>
+    <% } %>
+  </p>
+
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <%- include('../partials/provider-sidebar') %>
+    </div>
+    <div class="col-lg-9">
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-bag stat-icon"></i><div class="stat-number"><%= stats.totalOffers %></div><small class="text-muted">Offres</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-check-circle stat-icon"></i><div class="stat-number"><%= stats.validatedOffers %></div><small class="text-muted">Validées</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-calendar-check stat-icon"></i><div class="stat-number"><%= stats.totalBookings %></div><small class="text-muted">Réservations</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-hourglass-split stat-icon"></i><div class="stat-number"><%= stats.pendingBookings %></div><small class="text-muted">En attente</small></div>
+        </div>
+      </div>
+
+      <div class="stat-card mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Statistiques de vue</h5>
+        </div>
+        <p class="text-muted small mb-0"><i class="bi bi-eye"></i> <%= provider.stats ? provider.stats.views : 0 %> vues cumulées sur vos offres · <i class="bi bi-graph-up"></i> <%= provider.stats ? provider.stats.bookings : 0 %> réservations générées</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Dernières réservations reçues</h5>
+          <a href="/prestataire/reservations" class="small">Voir tout</a>
+        </div>
+        <% if (bookings.length === 0) { %>
+          <p class="text-muted small">Aucune réservation pour le moment.</p>
+        <% } %>
+        <% bookings.forEach(b => { %>
+          <div class="d-flex justify-content-between align-items-center border-bottom py-2 flex-wrap gap-2">
+            <div>
+              <strong><%= b.fullName %></strong> — <%= b.offer ? b.offer.title : '' %>
+              <p class="small text-muted mb-0"><%= b.date %> · <%= b.participants %> pers.</p>
+            </div>
+            <span class="badge badge-status-<%= b.status %>"><%= b.status === 'pending' ? 'En attente' : (b.status === 'confirmed' ? 'Confirmée' : 'Annulée') %></span>
+          </div>
+        <% }) %>
+      </div>
+
+      <div class="text-end mt-4">
+        <a href="/prestataire/offres/nouveau" class="btn btn-azulink-primary"><i class="bi bi-plus-circle"></i> Ajouter une offre</a>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,72 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4"><%= offer ? "Modifier l'offre" : 'Nouvelle offre' %></h1>
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <%- include('../partials/provider-sidebar') %>
+    </div>
+    <div class="col-lg-9">
+      <div class="stat-card">
+        <form method="post" action="<%= offer ? '/prestataire/offres/' + offer.id + '/modifier' : '/prestataire/offres/nouveau' %>">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label small">Titre de l'offre *</label>
+              <input type="text" name="title" class="form-control" required value="<%= offer ? offer.title : '' %>">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small">Catégorie *</label>
+              <select name="categoryId" class="form-select" required>
+                <% categories.forEach(cat => { %>
+                  <option value="<%= cat.id %>" <%= offer && offer.categoryId === cat.id ? 'selected' : '' %>><%= cat.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label small">Description courte *</label>
+              <textarea name="description" class="form-control" rows="2" required><%= offer ? offer.description : '' %></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label small">Programme détaillé (une étape par ligne)</label>
+              <textarea name="program" class="form-control" rows="4"><%= offer ? offer.program : '' %></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label small">Ce qui est inclus (un élément par ligne)</label>
+              <textarea name="included" class="form-control" rows="3"><%= offer ? offer.included.join('\n') : '' %></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label small">URLs des photos (une par ligne)</label>
+              <textarea name="images" class="form-control" rows="3" placeholder="https://..."><%= offer ? offer.images.join('\n') : '' %></textarea>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label small">Adresse / localisation *</label>
+              <input type="text" name="address" class="form-control" required value="<%= offer ? offer.location.address : '' %>">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Latitude</label>
+              <input type="text" name="lat" class="form-control" value="<%= offer ? offer.location.lat : '32.9394' %>">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Longitude</label>
+              <input type="text" name="lng" class="form-control" value="<%= offer ? offer.location.lng : '-5.6675' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Durée *</label>
+              <input type="text" name="duration" class="form-control" required placeholder="Ex : 1 jour (8h)" value="<%= offer ? offer.duration : '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Prix indicatif (MAD) *</label>
+              <input type="number" name="price" class="form-control" required value="<%= offer ? offer.price : '' %>">
+            </div>
+            <div class="col-12">
+              <label class="form-label small">Informations pratiques</label>
+              <textarea name="practicalInfo" class="form-control" rows="2"><%= offer ? offer.practicalInfo : '' %></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-azulink-primary mt-4"><%= offer ? 'Enregistrer les modifications' : "Créer l'offre" %></button>
+          <p class="small text-muted mt-2 mb-0">Votre offre sera visible publiquement après validation par l'équipe AzulLink.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

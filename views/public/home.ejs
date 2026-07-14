@@ -1,0 +1,122 @@
+<%- include('../partials/header') %>
+
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1>Découvrez l'écotourisme immersif de <span style="color:#d9a441;">Khénifra</span></h1>
+        <p class="lead">AzulLink connecte les voyageurs à des expériences authentiques, des prestataires locaux et aux richesses naturelles, culturelles et artisanales de la région.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a href="/catalogue" class="btn btn-azulink-primary btn-lg"><i class="bi bi-compass"></i> Découvrir les offres</a>
+          <a href="/devenir-partenaire" class="btn btn-outline-light btn-lg">Devenir partenaire</a>
+        </div>
+        <div class="row mt-5 g-3">
+          <div class="col-4"><div class="stat-badge text-center"><div class="fs-3 fw-bold"><%= stats.offers %>+</div><small>Expériences</small></div></div>
+          <div class="col-4"><div class="stat-badge text-center"><div class="fs-3 fw-bold"><%= stats.providers %>+</div><small>Prestataires locaux</small></div></div>
+          <div class="col-4"><div class="stat-badge text-center"><div class="fs-3 fw-bold"><%= stats.bookings %>+</div><small>Réservations</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="section-title">Pourquoi choisir AzulLink ?</h2>
+    <p class="section-subtitle">Une plateforme pensée pour un tourisme authentique et responsable</p>
+  </div>
+  <div class="row g-4 text-center">
+    <div class="col-md-3">
+      <div class="value-icon"><i class="bi bi-people-fill"></i></div>
+      <h5>Prestataires locaux</h5>
+      <p class="text-muted small">Un réseau de guides, gîtes et artisans authentiques, sélectionnés et validés.</p>
+    </div>
+    <div class="col-md-3">
+      <div class="value-icon"><i class="bi bi-tree-fill"></i></div>
+      <h5>Nature préservée</h5>
+      <p class="text-muted small">Valoriser les richesses naturelles du Moyen Atlas dans le respect de l'environnement.</p>
+    </div>
+    <div class="col-md-3">
+      <div class="value-icon"><i class="bi bi-camera-reels-fill"></i></div>
+      <h5>Expériences immersives</h5>
+      <p class="text-muted small">Vivez le patrimoine culturel et artisanal local au plus près des habitants.</p>
+    </div>
+    <div class="col-md-3">
+      <div class="value-icon"><i class="bi bi-wifi-off"></i></div>
+      <h5>Accès hors-connexion</h5>
+      <p class="text-muted small">Consultez vos réservations et contacts même dans les zones à faible réseau.</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5" style="background: var(--azul-sand);">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title mb-1">Expériences phares</h2>
+        <p class="section-subtitle mb-0">Une sélection de nos meilleures offres du moment</p>
+      </div>
+      <a href="/catalogue" class="btn btn-azulink-outline">Voir tout le catalogue <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-4">
+      <% featured.forEach(offer => { %>
+        <div class="col-md-4">
+          <div class="offer-card position-relative">
+            <div class="position-relative">
+              <img src="<%= offer.images[0] %>" class="offer-img" alt="<%= offer.title %>">
+              <span class="category-badge"><%= offer.category ? offer.category.name : '' %></span>
+            </div>
+            <div class="p-3">
+              <h5 class="mb-1"><%= offer.title %></h5>
+              <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> <%= offer.location.address %></p>
+              <p class="small mb-3"><%= offer.description.slice(0, 90) %>...</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="price-tag"><%= offer.price %> MAD</span>
+                <a href="/offres/<%= offer.slug %>" class="btn btn-sm btn-azulink-primary">Découvrir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="section-title">Explorez par catégorie</h2>
+  </div>
+  <div class="d-flex flex-wrap gap-2 justify-content-center">
+    <% categories.forEach(cat => { %>
+      <a href="/catalogue?categorie=<%= cat.slug %>" class="category-pill"><i class="bi <%= cat.icon %>"></i> <%= cat.name %></a>
+    <% }) %>
+  </div>
+</section>
+
+<section class="container pb-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="testimonial-card">
+        <p><i class="bi bi-quote fs-3 text-success"></i></p>
+        <p>"Une immersion incroyable dans la culture berbère, loin du tourisme de masse. Le guide connaissait chaque recoin de la montagne."</p>
+        <strong>— Marc D., voyageur</strong>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="testimonial-card">
+        <p><i class="bi bi-quote fs-3 text-success"></i></p>
+        <p>"AzulLink nous a permis de faire connaître notre gîte à de nouveaux visiteurs tout en gardant l'authenticité du lieu."</p>
+        <strong>— Fatima Zahra, gîte partenaire</strong>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="testimonial-card">
+        <p><i class="bi bi-quote fs-3 text-success"></i></p>
+        <p>"La réservation est simple et rapide, et j'ai pu télécharger mon programme pour l'avoir même sans réseau en montagne."</p>
+        <strong>— Sara B., voyageuse</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

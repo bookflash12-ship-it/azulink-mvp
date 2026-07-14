@@ -1,0 +1,10 @@
+<div class="dashboard-sidebar">
+  <ul class="nav flex-column">
+    <li><a class="nav-link <%= path === '/admin' ? 'active' : '' %>" href="/admin"><i class="bi bi-speedometer2"></i> Tableau de bord</a></li>
+    <li><a class="nav-link <%= path === '/admin/utilisateurs' ? 'active' : '' %>" href="/admin/utilisateurs"><i class="bi bi-people"></i> Utilisateurs</a></li>
+    <li><a class="nav-link <%= path === '/admin/prestataires' ? 'active' : '' %>" href="/admin/prestataires"><i class="bi bi-shop"></i> Prestataires</a></li>
+    <li><a class="nav-link <%= path === '/admin/offres' ? 'active' : '' %>" href="/admin/offres"><i class="bi bi-bag"></i> Offres</a></li>
+    <li><a class="nav-link <%= path === '/admin/reservations' ? 'active' : '' %>" href="/admin/reservations"><i class="bi bi-calendar-check"></i> Réservations</a></li>
+    <li><a class="nav-link <%= path === '/admin/categories' ? 'active' : '' %>" href="/admin/categories"><i class="bi bi-tags"></i> Catégories</a></li>
+  </ul>
+</div>

@@ -1,0 +1,90 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4"><i class="bi bi-person-circle"></i> Bonjour, <%= currentUser.name %></h1>
+
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <div class="dashboard-sidebar">
+        <ul class="nav flex-column">
+          <li><a class="nav-link active" href="#historique"><i class="bi bi-calendar-check"></i> Historique</a></li>
+          <li><a class="nav-link" href="#favoris"><i class="bi bi-heart"></i> Favoris</a></li>
+          <li><a class="nav-link" href="#profil"><i class="bi bi-gear"></i> Mon profil</a></li>
+          <li><a class="nav-link" href="/hors-connexion"><i class="bi bi-wifi-off"></i> Hors-connexion</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div id="historique" class="stat-card mb-4">
+        <h4 class="section-title mb-3">Mes réservations</h4>
+        <% if (bookings.length === 0) { %>
+          <p class="text-muted">Vous n'avez pas encore de réservation. <a href="/catalogue">Découvrir les offres</a></p>
+        <% } %>
+        <% bookings.forEach(b => { %>
+          <div class="d-flex justify-content-between align-items-center border-bottom py-3 flex-wrap gap-2">
+            <div>
+              <strong><%= b.offer ? b.offer.title : 'Offre supprimée' %></strong>
+              <p class="small text-muted mb-0"><i class="bi bi-calendar"></i> <%= b.date %> · <i class="bi bi-people"></i> <%= b.participants %> participant(s)</p>
+            </div>
+            <span class="badge badge-status-<%= b.status %>"><%= b.status === 'pending' ? 'En attente' : (b.status === 'confirmed' ? 'Confirmée' : 'Annulée') %></span>
+          </div>
+        <% }) %>
+      </div>
+
+      <div id="favoris" class="stat-card mb-4">
+        <h4 class="section-title mb-3">Mes favoris</h4>
+        <div class="row g-3">
+          <% if (favoriteOffers.length === 0) { %>
+            <p class="text-muted">Aucun favori pour le moment.</p>
+          <% } %>
+          <% favoriteOffers.forEach(offer => { %>
+            <div class="col-md-6">
+              <div class="offer-card">
+                <img src="<%= offer.images[0] %>" class="offer-img" alt="<%= offer.title %>">
+                <div class="p-3">
+                  <h6><%= offer.title %></h6>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="price-tag small"><%= offer.price %> MAD</span>
+                    <a href="/offres/<%= offer.slug %>" class="btn btn-sm btn-azulink-outline">Voir</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div id="profil" class="stat-card">
+        <h4 class="section-title mb-3">Mon profil</h4>
+        <form method="post" action="/mon-compte/profil" class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label small">Nom complet</label>
+            <input type="text" name="name" class="form-control" value="<%= currentUser.name %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Téléphone</label>
+            <input type="tel" name="phone" class="form-control" value="<%= currentUser.phone %>">
+          </div>
+          <div class="col-12">
+            <button class="btn btn-azulink-primary">Mettre à jour</button>
+          </div>
+        </form>
+        <hr>
+        <form method="post" action="/mon-compte/mot-de-passe" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small">Mot de passe actuel</label>
+            <input type="password" name="currentPassword" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Nouveau mot de passe</label>
+            <input type="password" name="newPassword" class="form-control" required minlength="6">
+          </div>
+          <div class="col-12">
+            <button class="btn btn-azulink-outline">Changer le mot de passe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

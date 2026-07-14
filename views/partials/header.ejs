@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | AzulLink' : 'AzulLink — Écotourisme immersif à Khénifra' %></title>
+  <meta name="description" content="AzulLink connecte les voyageurs aux expériences authentiques, prestataires locaux et richesses naturelles de la région de Khénifra.">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2f6844">
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="offline-banner" class="d-none">
+  <i class="bi bi-wifi-off"></i> Vous êtes hors connexion — certaines pages restent disponibles hors-ligne.
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top azulink-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <i class="bi bi-tree-fill"></i> Azul<span>Link</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link <%= path === '/' ? 'active' : '' %>" href="/">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link <%= path && path.startsWith('/catalogue') ? 'active' : '' %>" href="/catalogue">Catalogue</a></li>
+        <li class="nav-item"><a class="nav-link <%= path === '/a-propos' ? 'active' : '' %>" href="/a-propos">À propos</a></li>
+        <li class="nav-item"><a class="nav-link <%= path === '/devenir-partenaire' ? 'active' : '' %>" href="/devenir-partenaire">Devenir partenaire</a></li>
+        <li class="nav-item"><a class="nav-link <%= path === '/hors-connexion' ? 'active' : '' %>" href="/hors-connexion"><i class="bi bi-download"></i> Hors-ligne</a></li>
+      </ul>
+      <ul class="navbar-nav align-items-lg-center">
+        <% if (currentUser) { %>
+          <% if (currentUser.role === 'traveler') { %>
+            <li class="nav-item"><a class="nav-link" href="/mon-compte"><i class="bi bi-person-circle"></i> <%= currentUser.name %></a></li>
+          <% } else if (currentUser.role === 'provider') { %>
+            <li class="nav-item"><a class="nav-link" href="/prestataire"><i class="bi bi-shop"></i> Espace prestataire</a></li>
+          <% } else if (currentUser.role === 'admin') { %>
+            <li class="nav-item"><a class="nav-link" href="/admin"><i class="bi bi-speedometer2"></i> Administration</a></li>
+          <% } %>
+          <li class="nav-item"><a class="nav-link" href="/deconnexion"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/connexion">Connexion</a></li>
+          <li class="nav-item"><a class="btn btn-azulink-primary ms-lg-2" href="/inscription">Créer un compte</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<% if (messages.success && messages.success.length) { %>
+  <div class="container mt-3">
+    <% messages.success.forEach(m => { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill"></i> <%= m %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+<% if (messages.error && messages.error.length) { %>
+  <div class="container mt-3">
+    <% messages.error.forEach(m => { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i> <%= m %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<main>

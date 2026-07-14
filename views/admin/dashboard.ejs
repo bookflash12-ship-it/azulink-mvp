@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4"><i class="bi bi-speedometer2"></i> Tableau de bord administrateur</h1>
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <%- include('../partials/admin-sidebar') %>
+    </div>
+    <div class="col-lg-9">
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-people stat-icon"></i><div class="stat-number"><%= stats.users %></div><small class="text-muted">Voyageurs</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-shop stat-icon"></i><div class="stat-number"><%= stats.providers %></div><small class="text-muted">Prestataires (<%= stats.providersPending %> en attente)</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-bag stat-icon"></i><div class="stat-number"><%= stats.offers %></div><small class="text-muted">Offres (<%= stats.offersPending %> en attente)</small></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card text-center"><i class="bi bi-calendar-check stat-icon"></i><div class="stat-number"><%= stats.bookings %></div><small class="text-muted">Réservations (<%= stats.bookingsPending %> en attente)</small></div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="stat-card">
+            <h5 class="mb-3">Offres par catégorie</h5>
+            <% byCategory.forEach(c => { %>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small"><%= c.name %></span>
+                <div class="flex-grow-1 mx-2" style="height:8px; background:#eee; border-radius:4px;">
+                  <div style="height:8px; width:<%= stats.offers ? (c.count / stats.offers * 100) : 0 %>%; background: var(--azul-green); border-radius:4px;"></div>
+                </div>
+                <span class="small fw-bold"><%= c.count %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="stat-card">
+            <h5 class="mb-3">Dernières réservations</h5>
+            <% recentBookings.forEach(b => { %>
+              <div class="d-flex justify-content-between border-bottom py-2">
+                <span class="small"><%= b.fullName %> — <%= b.offer ? b.offer.title : '' %></span>
+                <span class="badge badge-status-<%= b.status %>"><%= b.status %></span>
+              </div>
+            <% }) %>
+            <% if (recentBookings.length === 0) { %><p class="small text-muted">Aucune réservation.</p><% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-md-4">
+          <a href="/admin/prestataires" class="btn btn-azulink-outline w-100">Valider les prestataires (<%= stats.providersPending %>)</a>
+        </div>
+        <div class="col-md-4">
+          <a href="/admin/offres" class="btn btn-azulink-outline w-100">Valider les offres (<%= stats.offersPending %>)</a>
+        </div>
+        <div class="col-md-4">
+          <a href="/admin/reservations" class="btn btn-azulink-outline w-100">Gérer les réservations (<%= stats.bookingsPending %>)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

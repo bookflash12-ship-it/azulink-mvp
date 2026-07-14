@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+<section class="hero" style="padding: 3.5rem 0;">
+  <div class="container">
+    <h1>Devenez partenaire AzulLink</h1>
+    <p class="lead mb-0">Hébergements, guides, artisans, transporteurs : rejoignez notre réseau de prestataires locaux.</p>
+  </div>
+</section>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="stat-card">
+        <form method="post" action="/devenir-partenaire">
+          <h4 class="section-title mb-3">Votre demande de partenariat</h4>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Votre nom complet *</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Nom de votre activité *</label>
+              <input type="text" name="businessName" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Type de prestataire *</label>
+              <select name="type" class="form-select" required>
+                <option value="Hébergements">Hébergements</option>
+                <option value="Guides & Accompagnateurs">Guides & Accompagnateurs</option>
+                <option value="Transporteurs">Transporteurs</option>
+                <option value="Artisans">Artisans</option>
+                <option value="Acteurs culturels">Acteurs culturels</option>
+                <option value="Organisateurs d'activités">Organisateurs d'activités</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Téléphone *</label>
+              <input type="tel" name="phone" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Email *</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Décrivez votre activité *</label>
+              <textarea name="description" class="form-control" rows="4" required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-azulink-primary w-100 mt-4">Envoyer ma demande</button>
+          <p class="small text-muted mt-2 mb-0">Votre compte sera activé après validation par l'équipe AzulLink. Un mot de passe temporaire vous sera fourni.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

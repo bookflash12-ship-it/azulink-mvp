@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+<div class="container py-4">
+  <h1 class="h3 mb-4">Mon profil prestataire</h1>
+  <div class="row g-4">
+    <div class="col-lg-3">
+      <%- include('../partials/provider-sidebar') %>
+    </div>
+    <div class="col-lg-9">
+      <div class="stat-card">
+        <form method="post" action="/prestataire/profil" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small">Nom de l'activité</label>
+            <input type="text" name="businessName" class="form-control" value="<%= provider.businessName %>" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Type de prestataire</label>
+            <select name="type" class="form-select">
+              <% ['Hébergements','Guides & Accompagnateurs','Transporteurs','Artisans','Acteurs culturels',"Organisateurs d'activités"].forEach(t => { %>
+                <option value="<%= t %>" <%= provider.type === t ? 'selected' : '' %>><%= t %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Téléphone</label>
+            <input type="tel" name="phone" class="form-control" value="<%= provider.phone %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Email</label>
+            <input type="email" name="email" class="form-control" value="<%= provider.email %>">
+          </div>
+          <div class="col-12">
+            <label class="form-label small">Description</label>
+            <textarea name="description" class="form-control" rows="4"><%= provider.description %></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label small">Disponibilités (texte libre)</label>
+            <textarea name="availability" class="form-control" rows="2" placeholder="Ex : Disponible tous les jours sauf le vendredi. Fermé en janvier."><%= provider.availability || '' %></textarea>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-azulink-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>
